@@ -31,27 +31,37 @@ class BankingApp extends StatelessWidget {
   }
 }
 
-class BankingHomePage extends StatelessWidget {
+class BankingHomePage extends StatefulWidget {
   final BankService service;
 
   BankingHomePage({required this.service});
 
   @override
+  _BankingHomePageState createState() => _BankingHomePageState();
+}
+
+class _BankingHomePageState extends State<BankingHomePage> {
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('App Banco')),
+      appBar: AppBar(title: Text('Banking App')),
       body: Column(
         children: [
           BankForm(onSubmit: (account) async {
             try {
               // Cria a nova conta
-              await service.create(account);
+              await widget.service.create(account);
               // Mostra mensagem de sucesso
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(content: Text('Account created successfully!')),
               );
-              // Opcional: Atualize a lista de contas, se necessário
-              // (você pode precisar re-chamar getAll() ou similar aqui)
+              // Atualiza a tela
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                    builder: (context) =>
+                        BankingHomePage(service: widget.service)),
+              );
             } catch (e) {
               // Mostra mensagem de erro
               ScaffoldMessenger.of(context).showSnackBar(
@@ -59,7 +69,7 @@ class BankingHomePage extends StatelessWidget {
               );
             }
           }),
-          Expanded(child: AccountList(service: service)),
+          Expanded(child: AccountList(service: widget.service)),
         ],
       ),
     );

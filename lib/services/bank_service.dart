@@ -62,7 +62,7 @@ class BankService implements ApiService {
   @override
   Future<dynamic> update(int id, dynamic data) async {
     final response = await http.put(
-      Uri.parse('$baseUrl?id=$id'),
+      Uri.parse('$baseUrl/$id'),
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode(data),
     );
@@ -76,7 +76,9 @@ class BankService implements ApiService {
 
   @override
   Future<void> delete(int id) async {
-    final response = await http.delete(Uri.parse('$baseUrl?id=$id'));
+    print(id);
+
+    final response = await http.delete(Uri.parse('$baseUrl/$id'));
 
     if (response.statusCode == 204) {
       // Exclusão bem-sucedida

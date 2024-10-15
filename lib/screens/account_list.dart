@@ -32,7 +32,12 @@ class _AccountListState extends State<AccountList> {
 
     try {
       await widget.service.create(account); // Cria a nova conta
-      _loadAccounts(); // Atualiza a lista após a criação
+      _loadAccounts();
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+            builder: (context) => AccountList(service: widget.service)),
+      ); // Atualiza a lista após a criação
     } catch (e) {
       // Exibir uma mensagem de erro
       ScaffoldMessenger.of(context).showSnackBar(
@@ -51,8 +56,14 @@ class _AccountListState extends State<AccountList> {
     });
 
     try {
-      await widget.service.update(account['id'], account); // Atualiza a conta
-      _loadAccounts(); // Atualiza a lista após a edição
+      final id = int.parse(account['id'].toString());
+      await widget.service.update(id, account); // Atualiza a conta
+      _loadAccounts();
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+            builder: (context) => AccountList(service: widget.service)),
+      ); // Atualiza a lista após a edição
     } catch (e) {
       // Exibir uma mensagem de erro
       ScaffoldMessenger.of(context).showSnackBar(
@@ -99,8 +110,16 @@ class _AccountListState extends State<AccountList> {
                             icon: Icon(Icons.delete),
                             onPressed: () async {
                               try {
-                                await widget.service.delete(account['id']);
-                                _loadAccounts(); // Atualiza a lista após exclusão
+                                final id = int.parse(account['id'].toString());
+                                await widget.service.delete(id);
+                                _loadAccounts();
+                                Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          AccountList(service: widget.service)),
+                                );
+                                // Atualiza a lista após exclusão
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(
                                       content:
