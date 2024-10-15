@@ -1,0 +1,29 @@
+{
+  "contas": [
+    {
+      "id": 1,
+      "nome": "Arthur",
+      "balanco": 1500
+    },
+    {
+      "id": 3,
+      "nome": "Giovana ",
+      "balanco": 5
+    },
+    {
+      "id": 4,
+      "nome": "Pablo",
+      "balanco": 22
+    },
+    {
+      "id": 5,
+      "nome": "Paulo",
+      "balanco": 6
+    },
+    {
+      "id": 6,
+      "nome": "Janisse",
+      "balanco": 66
+    }
+  ]
+}
